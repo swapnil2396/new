@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elasticsearch
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: test
+    server: https://601142D48106B9B8E74C9A7FD4B50655.gr7.us-east-2.eks.amazonaws.com
+  source:
+    path: Elasticsearch/helm/elasticsearch-7.17.3/elasticsearch/
+    repoURL: 'https://neil596@bitbucket.org/inilesh/gessa-tools-setup.git'
+    targetRevision: master
+    helm:
+      valueFiles:
+        - es-values.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
